@@ -1,12 +1,15 @@
 import sys
 import chromadb
 from config import DB_PATH, COLLECTION_NAME
+from chromadb.utils import embedding_functions
+
  
 def buscar(query_texto: str, n_resultados: int = 3, categoria: str | None = None):
     client = chromadb.PersistentClient(path=DB_PATH)
+    embedding_fn = embedding_functions.DefaultEmbeddingFunction()
  
     try:
-        collection = client.get_collection(name=COLLECTION_NAME)
+        collection = client.get_collection(name=COLLECTION_NAME,embedding_function=embedding_fn)
     except Exception:
         print("Coleção não encontrada. Execute 'python populate_db.py' primeiro.")
         sys.exit(1)

@@ -1,5 +1,7 @@
 import chromadb
 from config import DB_PATH, COLLECTION_NAME
+from chromadb.utils import embedding_functions
+
 
 PRODUTOS = [
     {
@@ -67,9 +69,14 @@ PRODUTOS = [
  
 def popular_banco():
     client = chromadb.PersistentClient(path=DB_PATH)
+    embedding_fn = embedding_functions.DefaultEmbeddingFunction()
  
     # CREATE TABLE IF NOT EXISTS produtos (...)
-    collection = client.get_or_create_collection(name=COLLECTION_NAME)
+    collection = client.get_or_create_collection(
+      name=COLLECTION_NAME,
+      embedding_function=embedding_fn,
+      metadata={"hnsw:space": "cosine"},
+    )
 
     if collection.count() > 0:
       print(f"O banco já contém {collection.count()} documentos. Nada foi alterado.")
