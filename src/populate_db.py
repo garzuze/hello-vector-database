@@ -70,6 +70,10 @@ def popular_banco():
  
     # CREATE TABLE IF NOT EXISTS produtos (...)
     collection = client.get_or_create_collection(name=COLLECTION_NAME)
+
+    if collection.count() > 0:
+      print(f"O banco já contém {collection.count()} documentos. Nada foi alterado.")
+      return
  
     # INSERT INTO produtos (id, descricao, categoria, preco) VALUES (...)
     collection.add(
