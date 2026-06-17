@@ -23,3 +23,13 @@ venv\Scripts\activate     # Windows
 
 pip install -r requirements.txt
 ```
+
+## Executando
+
+Passo 1: popula o banco (executar apenas uma vez)
+`python src/populate_db.py`
+
+Passo 2: realiza buscas semânticas
+`python src/search.py`
+
+
